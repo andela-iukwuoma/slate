@@ -1,189 +1,58 @@
 ---
-title: API Reference
-
+title: DocmanPro API Reference
 language_tabs:
-  - shell
-  - ruby
-  - python
   - javascript
-
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
-
+  - <span>&copy; Ignatius Ukwuoma</span>
 includes:
-  - errors
-
+  - users
+  - documents
+  - roles
+  - search
 search: true
 ---
-
 # Introduction
-
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
-
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
-
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
+DocmanPro API contains restful API endpoints that allow users to create, read, update and delete documents, users and roles. It also offers a way to ensure that only authorized users can perform certain operations.
+## Development
+DocmanPro is a [NodeJs](http://nodejs.org/) application and [Express](http://expressjs.com/) is used for routing. [Sequelize](http://docs.sequelizejs.com/) is used as the Object Relational Mapper with [Postgres](http://postgresql.com/) as database.
+## Installation
+Follow the steps below to setup a local development environment. First ensure you have [Postgresql](https://www.postgresql.org/) installed, and a version of [Node.js](http://nodejs.org/) greater than or equal to v6.8.0.
+1. Clone the repository from a terminal with `git clone https://github.com/andela-iukwuoma/docman.git`.
+2. Move into the project directory with `cd docman`
+3. Create a `.env` file and add your database URL as the key name `DATABASE URL`.
+4. Install project dependencies with `npm install`
+5. Start the express server with  `npm start`.
+## API Summary
+### Users
+EndPoint                      |   Functionality
+------------------------------|------------------------
+POST /users/login         |   Logs in a user
+POST /users/logout        |   Logs out a user
+POST /users/              |   Creates a new user
+GET /users/               |   Gets all users (available only to Admins)
+GET /users/:id           |   Retrieves a particular user by the id specified
+PUT /users/:id           |   Updates a user's details by the id specified (available only to the user and SuperAdmin)
+DELETE /users/:id        |   Deletes a user by the id specified (available only to the user and SuperAdmin)
+GET /users/:id/documents   | Gets all documents for a particular user by the id specified
+GET /users/?limit={integer}&offset={integer} | Get users by limit and/or offset for pagination
+### Documents
+EndPoint                      |   Functionality
+------------------------------|------------------------
+POST /documents/          |   Creates a new document.
+GET /documents/           |   Gets all documents.
+GET /documents/:id       |   Find document by id.
+PUT /documents/:id       |   Updates a document's details. (available only to the author and Admins)
+DELETE /documents/:id    |   Delete document. (available only to the author and Admins)
+GET /documents/?limit={integer}&offset={integer} | Get documents by limit and/or offset for pagination
+### Roles (available only to the SuperAdmin)
+EndPoint                      |   Functionality
+------------------------------|------------------------
+GET /roles/               |   Get all Roles.
+POST /roles/               |   Create a Role.
+PUT /roles/:id               |   Edit a Role by the id specified.
+DELETE /roles/:id               |   Delete a Role by the id specified.
+### Search
+EndPoint                      |   Functionality
+------------------------------|------------------------
+GET /search/documents/?q=query | Get all documents with title containing the search query
+GET /search/users/?q=query | Get all users whose name, username or email matches the search query (available only to Admins)
