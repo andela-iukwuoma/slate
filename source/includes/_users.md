@@ -152,7 +152,9 @@ offset | 0 | Sets the offset.
 > Response:
 
 ```javascript
-
+{
+    message: 'Deleted successfully'
+}
 ```
 
 ### Request
@@ -160,7 +162,7 @@ offset | 0 | Sets the offset.
 - Requires: Authentication by User or Superadmin
 
 ### Response
-- Status: `204: No Content`
+- Status: `200: OK`
 - Body `(application/json)`
 
 

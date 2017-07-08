@@ -109,6 +109,9 @@
 > Response:
 
 ```javascript
+{
+    message: 'Deleted successfully'
+}
 ```
 
 ### Request
@@ -116,5 +119,5 @@
 - Requires: Superadmin credentials
 
 ### Response
-- Status: `204: No Content`
+- Status: `200: OK`
 - Body `(application/json)`
