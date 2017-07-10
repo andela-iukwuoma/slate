@@ -153,7 +153,7 @@ offset | 0 | Sets the offset.
 ```javascript
 {
     "message": "Document has been updated",
-    "updatedDocument": {
+    "document": {
         "id": 29,
         "title": "Hello",
         "content": "Is it me you are looking for? Hello, how are you doing?",

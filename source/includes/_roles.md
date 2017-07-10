@@ -84,8 +84,9 @@
 > Response:
 
 ```javascript
-{
-    "updatedRole": {
+{   
+    "message": "Role is successfully updated",
+    "role": {
         "id": 21,
         "title": "writer",
         "createdAt": "2017-06-23T19:32:55.127Z",
